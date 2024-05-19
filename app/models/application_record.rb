@@ -15,4 +15,12 @@ class ApplicationRecord < ActiveRecord::Base
   def self.example
     new(self::Attrs.valid) rescue new()
   end
+
+  def self.setup_complete?
+    self::Attrs
+    "#{name}Serializer".constantize
+    return true
+  rescue NameError
+    false
+  end
 end

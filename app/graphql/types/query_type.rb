@@ -28,6 +28,8 @@ module Types
     ApplicationRecord.descendants.each do |model|
       namespace, name = model.name.split('::')
 
+      next unless model.setup_complete?
+
       type_class = Types::Objects::BaseModelType.create_type(model)
 
       field model.table_name.to_sym, [type_class], null: false do
