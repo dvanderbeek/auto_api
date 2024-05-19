@@ -11,14 +11,15 @@ DONE:
 
 TO TO FOR DEMO:
 
-* Add mutations for GQL
+* Dynamic GQL mutations
   * Create input objects and use for GQL input types and REST API create/update
 * Create pattern for enums (model attrs and GQL types)
-* Model Generator: add serializer, input, and attrs classes
+* Model Generator: add serializer, input, and attrs classes (automate generation of example attributes with Faker)
 
 FOLLOW UPS:
 
 * Customization / overriding defaults
 * Skip certain actions for a given model
+* Dynamic GQL schema based on user permissions
 * Generate API Clients
 * Generate Postman requests (or export OpenAPI to postman)
