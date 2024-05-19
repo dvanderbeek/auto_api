@@ -68,5 +68,3 @@ end
 gem 'graphql'
 gem 'graphiql-rails', group: :development
 gem 'active_model_serializers'
-gem 'rswag'
-gem 'swagger-blocks'

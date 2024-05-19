@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  before_action :set_model
+  skip_before_action :verify_authenticity_token, except: :docs
+  before_action :set_model, except: :docs
 
   def index
     render json: @model_class.all
@@ -32,6 +32,10 @@ class ApiController < ApplicationController
     resource = @model_class.find(params[:id])
     resource.destroy
     head :no_content
+  end
+
+  def docs
+    render plain: Docs.generate
   end
 
   private
