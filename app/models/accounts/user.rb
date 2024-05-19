@@ -1,2 +1,4 @@
-class Accounts::User < ApplicationRecord
+module Accounts
+  class User < ApplicationRecord
+  end
 end

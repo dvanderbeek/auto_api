@@ -11,4 +11,8 @@ class ApplicationRecord < ActiveRecord::Base
   def self.unpermitted_attributes
     %w[id created_at updated_at]
   end
+
+  def self.example
+    new(self::Attrs.valid) rescue new()
+  end
 end
