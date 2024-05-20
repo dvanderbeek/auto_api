@@ -5,12 +5,8 @@ module Mutations
         graphql_name "#{model.name.gsub('::', '')}#{action.capitalize}"
         types = Types::Objects::BaseModelType.register(model)
 
-        serializer = ActiveModelSerializers::SerializableResource.new(model.new)
-        attrs = serializer.serializable_hash.keys
-
-        attrs.each do |attr, value|
+        model.permitted_attributes.each do |attr|
           type = model.type_for_attribute(attr.to_sym).type
-
           # TODO: introspect validations to see what attributes are required
           argument attr.to_sym, Types::GqlType.new(type).to_gql, required: false
         end

@@ -8,11 +8,11 @@ DONE:
 * Dynamically generate GraphQL API (queries)
 * Create serializers and use for GQL object type definitions and REST API responses
 * Add example of Dynamic OpenAPI docs for REST API
+* Dynamic GQL mutations
 
 TO TO FOR DEMO:
 
-* Dynamic GQL mutations
-  * Create input objects and use for GQL input types and REST API create/update
+* Create input objects and use for GQL mutation args and REST API create/update permitted params
 * Create pattern for enums (model attrs and GQL types)
 * Model Generator: add serializer, input, and attrs classes (automate generation of example attributes with Faker)
 
