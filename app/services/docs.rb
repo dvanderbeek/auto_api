@@ -15,13 +15,32 @@ class Docs
     paths = {}
 
     ApplicationRecord.subclasses.each do |klass|
+      serializer = ActiveModelSerializers::SerializableResource.new(klass.example)
+      attrs = serializer.serializable_hash.keys
+
       paths[klass.table_name] = {
         get: {
           summary: "List all #{klass.table_name.titleize}",
           responses: {
             '200': {
               description: "A list of #{klass.table_name.titleize}",
-              example: ActiveModelSerializers::SerializableResource.new(klass.example).to_json
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      data: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: attrs.each_with_object({}) { |attr, props| props[attr] = klass.type_for_attribute(attr).type.to_s }
+                        }
+                      }
+                    },
+                    example: JSON.parse(serializer.to_json)
+                  }
+                }
+              }
             }
           }
         }

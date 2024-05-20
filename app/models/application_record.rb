@@ -13,7 +13,9 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def self.example
-    new(self::Attrs.valid) rescue new()
+    new(self::Attrs.valid)
+  rescue NameError
+    new()
   end
 
   def self.setup_complete?
