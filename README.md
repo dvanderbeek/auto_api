@@ -12,14 +12,15 @@ DONE:
 
 TO TO FOR DEMO:
 
-* Create input objects and use for GQL mutation args and REST API create/update permitted params
 * Create pattern for enums (model attrs and GQL types)
 * Model Generator: add serializer, input, and attrs classes (automate generation of example attributes with Faker)
 
 FOLLOW UPS:
 
+* More robust way to define permitted_params and args for mutations
 * Customization / overriding defaults
 * Skip certain actions for a given model
+* Handle nested objects (like /posts/:id/comments)
 * Dynamic GQL schema based on user permissions
 * Generate API Clients
 * Generate Postman requests (or export OpenAPI to postman)

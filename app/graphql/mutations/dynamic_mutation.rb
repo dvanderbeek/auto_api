@@ -5,17 +5,15 @@ module Mutations
         graphql_name "#{model.name.gsub('::', '')}#{action.capitalize}"
         types = Types::Objects::BaseModelType.register(model)
 
-        model.permitted_attributes.each do |attr|
-          type = model.type_for_attribute(attr.to_sym).type
-          # TODO: introspect validations to see what attributes are required
-          argument attr.to_sym, Types::GqlType.new(type).to_gql, required: false
-        end
+        argument :id, type: GraphQL::Types::BigInt if action == 'update'
+        argument :input, types[:input_type], required: true
+        # input_object_class types[:input_type]
 
         field :result, types[:type], null: false
 
         define_method :resolve do |args|
-          resource = action == 'create' ? model.new(**args) : model.find(input[:id])
-          resource.assign_attributes(**args) unless action == 'create'
+          resource = action == 'create' ? model.new(**args[:input]) : model.find(args[:id])
+          resource.assign_attributes(**args[:input]) unless action == 'create'
           if resource.save
             { result: resource }
           else
