@@ -30,9 +30,10 @@ module Types
 
       next unless model.setup_complete?
 
-      type_class = Types::Objects::BaseModelType.create_type(model)
+      # type_class = Types::Objects::BaseModelType.create_type(model)
+      types = Types::Objects::BaseModelType.register(model)
 
-      field model.table_name.to_sym, [type_class], null: false do
+      field model.table_name.to_sym, [types[:type]], null: false do
         description "Returns a list of #{namespace} #{name.pluralize}"
       end
 

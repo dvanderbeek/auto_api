@@ -1,22 +1,16 @@
-require 'factory_bot'
-
 module Types
   module Objects
     class BaseModelType < Types::BaseObject
-      class GqlType
-        attr_reader :type
+      @types = {}
 
-        def initialize(type)
-          @type = type
+      def self.register(model)
+        type_name = "#{model.name.gsub('::', '')}Type"
+
+        unless @types[type_name]
+          @types[type_name] = create_type(model)
         end
 
-        def to_gql
-          case type
-          when :string, :text then GraphQL::Types::String
-          when :integer then GraphQL::Types::BigInt
-          when :datetime then GraphQL::Types::ISO8601DateTime
-          end
-        end
+        { type: @types[type_name] }
       end
 
       def self.create_type(model)
@@ -31,7 +25,7 @@ module Types
             column = model.columns.find { |c| c.name.to_s == attr.to_s }
             type = model.type_for_attribute(attr.to_sym).type
 
-            field attr.to_sym, GqlType.new(type).to_gql, null: (column&.null || true)
+            field attr.to_sym, Types::GqlType.new(type).to_gql, null: (column&.null || true)
           end
         end
       end
