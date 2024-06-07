@@ -8,6 +8,7 @@ module Blog
           updated_at: Time.current,
           title: 'My first post',
           content: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+          enhanced_title: 'My first post asdf'
         }
       end
     end

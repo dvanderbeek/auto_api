@@ -1,7 +1,10 @@
-class VirtualRecord < ActiveModelSerializers::Model
+class VirtualRecord
   include ActiveModel::Model
   include ActiveModel::Attributes
+  include ActiveModel::Serialization
   include RestfulActions
+
+  restful_actions :create
 
   def self.table_name
     name.gsub('::', '').pluralize.underscore
@@ -27,5 +30,9 @@ class VirtualRecord < ActiveModelSerializers::Model
     return true
   rescue NameError
     false
+  end
+
+  def save(*)
+    valid?
   end
 end

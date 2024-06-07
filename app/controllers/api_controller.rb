@@ -12,7 +12,8 @@ class ApiController < ApplicationController
   end
 
   def create
-    resource = @model_class.new(resource_params)
+    resource = @model_class.new(resource_params.to_h)
+
     if resource.save
       render json: resource, status: :created
     else
