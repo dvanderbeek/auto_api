@@ -2,7 +2,7 @@ module RestfulActions
   extend ActiveSupport::Concern
 
   included do
-    class_attribute :available_restful_actions
+    class_attribute :available_restful_actions, default: [:index, :show, :create, :update, :destroy]
   end
 
   class_methods do

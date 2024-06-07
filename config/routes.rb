@@ -1,17 +1,19 @@
 Rails.application.routes.draw do
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
   if Rails.env.development?
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
   post "/graphql", to: "graphql#execute"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # TODO: Maybe add a way to register certain models instead of all ApplicationRecord descendants
   (ApplicationRecord.descendants + VirtualRecord.descendants).each do |klass|
     namespace, model = klass.name.split('::')
-    only = klass.available_restful_actions || [:index, :show, :create, :update, :destroy]
 
     scope namespace.underscore do
-      resources model.underscore.pluralize, controller: 'api', defaults: { model: klass.name }, only:
+      resources model.underscore.pluralize,
+                controller: 'api',
+                defaults: { model: klass.name },
+                only: klass.available_restful_actions
     end
   end
 
