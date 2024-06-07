@@ -43,7 +43,7 @@ module Types
 
             type = model.attribute_types[attr.to_s].type
 
-            field attr.to_sym, Types::GqlType.new(type).to_gql, null: false #(column&.null || true)
+            field attr.to_sym, Types::GqlType.new(type).to_gql, null: true #(column&.null || true)
           end
         end
       end
