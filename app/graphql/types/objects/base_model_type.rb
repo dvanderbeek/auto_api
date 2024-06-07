@@ -38,10 +38,12 @@ module Types
           attrs = serializer.serializable_hash.keys
 
           attrs.each do |attr, value|
-            column = model.columns.find { |c| c.name.to_s == attr.to_s }
+            # TODO: introspect validations to see what attributes are required
+            # column = model.columns.find { |c| c.name.to_s == attr.to_s }
+
             type = model.attribute_types[attr.to_s].type
 
-            field attr.to_sym, Types::GqlType.new(type).to_gql, null: (column&.null || true)
+            field attr.to_sym, Types::GqlType.new(type).to_gql, null: false #(column&.null || true)
           end
         end
       end
