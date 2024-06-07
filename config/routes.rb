@@ -6,11 +6,12 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # TODO: Maybe add a way to register certain models instead of all ApplicationRecord descendants
-  ApplicationRecord.descendants.each do |klass|
+  (ApplicationRecord.descendants + VirtualRecord.descendants).each do |klass|
     namespace, model = klass.name.split('::')
+    only = klass.available_restful_actions || [:index, :show, :create, :update, :destroy]
 
     scope namespace.underscore do
-      resources model.underscore.pluralize, controller: 'api', defaults: { model: klass.name }
+      resources model.underscore.pluralize, controller: 'api', defaults: { model: klass.name }, only:
     end
   end
 

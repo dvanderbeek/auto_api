@@ -22,7 +22,7 @@ module Types
           description "A dynamically generated input type for #{name}"
 
           model.permitted_attributes.each do |attr|
-            type = model.type_for_attribute(attr.to_sym).type
+            type = model.attribute_types[attr].type
             # TODO: introspect validations to see what attributes are required
             argument attr.to_sym, Types::GqlType.new(type).to_gql, required: false
           end
@@ -39,7 +39,7 @@ module Types
 
           attrs.each do |attr, value|
             column = model.columns.find { |c| c.name.to_s == attr.to_s }
-            type = model.type_for_attribute(attr.to_sym).type
+            type = model.attribute_types[attr.to_s].type
 
             field attr.to_sym, Types::GqlType.new(type).to_gql, null: (column&.null || true)
           end

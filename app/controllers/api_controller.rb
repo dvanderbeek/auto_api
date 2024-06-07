@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token, except: :docs
+  before_action :set_current_user
   before_action :set_model, except: :docs
 
   def index
@@ -46,5 +47,9 @@ class ApiController < ApplicationController
 
   def resource_params
     params.permit(@model_class.permitted_attributes)
+  end
+
+  def set_current_user
+    Current.user = request.headers['user'] || 'anonymous'
   end
 end

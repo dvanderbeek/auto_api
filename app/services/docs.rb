@@ -14,7 +14,7 @@ class Docs
   def self.paths
     paths = {}
 
-    ApplicationRecord.subclasses.each do |klass|
+    (ApplicationRecord.subclasses + VirtualRecord.subclasses).each do |klass|
       serializer = ActiveModelSerializers::SerializableResource.new(klass.example)
       attrs = serializer.serializable_hash.keys
 
@@ -33,7 +33,9 @@ class Docs
                         type: 'array',
                         items: {
                           type: 'object',
-                          properties: attrs.each_with_object({}) { |attr, props| props[attr] = klass.type_for_attribute(attr).type.to_s }
+                          properties: attrs.each_with_object({}) do |attr, props|
+                            props[attr] = { type: klass.attribute_types[attr.to_s].type.to_s }
+                          end
                         }
                       }
                     },

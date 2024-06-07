@@ -1,9 +1,12 @@
-class ApplicationRecord < ActiveRecord::Base
-  primary_abstract_class
+class VirtualRecord < ActiveModelSerializers::Model
+  include ActiveModel::Model
+  include ActiveModel::Attributes
+  include RestfulActions
 
-  # Defines permitted_params in API. Override for each model if necessary.
-  # TODO: Add way to make this dependent on context (like User's role)
-  # TODO: Hanlde params that don't map exactly to db columns
+  def self.table_name
+    name.gsub('::', '').pluralize.underscore
+  end
+
   def self.permitted_attributes
     attribute_names - unpermitted_attributes
   end
