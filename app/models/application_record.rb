@@ -13,7 +13,6 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def self.setup_complete?
-    self::Attrs
     "#{name}Serializer".constantize
     return true
   rescue NameError
