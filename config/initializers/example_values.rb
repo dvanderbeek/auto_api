@@ -29,3 +29,12 @@ module ActiveModel
     end
   end
 end
+
+class TransactionPayloadType < ActiveModel::Type::String
+  def example
+    'hex-encoded-transaction-payload'
+  end
+end
+
+ActiveRecord::Type.register(:transaction_payload, TransactionPayloadType)
+ActiveModel::Type.register(:transaction_payload, TransactionPayloadType)
