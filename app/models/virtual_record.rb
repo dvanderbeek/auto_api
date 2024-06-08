@@ -18,14 +18,7 @@ class VirtualRecord
     %w[id created_at updated_at]
   end
 
-  def self.example
-    new(self::Attrs.valid)
-  rescue NameError
-    new()
-  end
-
   def self.setup_complete?
-    self::Attrs
     "#{name}Serializer".constantize
     return true
   rescue NameError

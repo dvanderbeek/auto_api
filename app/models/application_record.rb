@@ -12,12 +12,6 @@ class ApplicationRecord < ActiveRecord::Base
     %w[id created_at updated_at]
   end
 
-  def self.example
-    new(self::Attrs.valid)
-  rescue NameError
-    new()
-  end
-
   def self.setup_complete?
     self::Attrs
     "#{name}Serializer".constantize
