@@ -1,3 +1,5 @@
+# Extending built-in types with example values for docs
+
 module ActiveRecord
   module Type
     class Text
@@ -29,6 +31,8 @@ module ActiveModel
     end
   end
 end
+
+# Adding custom types with more specific example values that can be used across resources
 
 class TransactionPayloadType < ActiveModel::Type::String
   def example
