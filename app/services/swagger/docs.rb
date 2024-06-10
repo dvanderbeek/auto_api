@@ -9,10 +9,20 @@ module Swagger
           termsOfService: 'https://figment.io/staking-terms-of-use'
         },
         paths:,
+        tags:,
         components: {
           schemas:
         }
       }.to_json
+    end
+
+    # TODO: This orders the tags which controls the default sorting order in Swagger UI
+    # Should build a mechanism to customize the order vs. just alphabetical
+    # https://swagger.io/docs/specification/grouping-operations-with-tags/
+    def self.tags
+      (ApplicationRecord.subclasses + VirtualRecord.subclasses).map do |k|
+        k.name.deconstantize.underscore
+      end.uniq.sort.map { |name| { name: } }
     end
 
     def self.schemas
@@ -28,6 +38,7 @@ module Swagger
         paths[Rails.application.routes.url_helpers.send("#{klass.table_name}_path")] = {
           get: {
             summary: "List all #{klass.table_name.titleize}",
+            tags: [ klass.module_parent.name.underscore ],
             responses: {
               '200': {
                 description: 'OK',
