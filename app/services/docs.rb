@@ -18,7 +18,7 @@ class Docs
       serializer = ActiveModelSerializers::SerializableResource.new(klass.new)
       attrs = serializer.serializable_hash.keys
 
-      paths["/#{klass.name.gsub('::', '/').underscore.pluralize}"] = {
+      paths[Rails.application.routes.url_helpers.send("#{klass.table_name}_path")] = {
         get: {
           summary: "List all #{klass.table_name.titleize}",
           responses: {
