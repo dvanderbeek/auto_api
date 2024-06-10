@@ -7,8 +7,17 @@ class Docs
         version: '2.0.0',
         termsOfService: 'https://figment.io/staking-terms-of-use'
       },
-      paths:
+      paths:,
+      components: {
+        schemas:
+      }
     }.to_json
+  end
+
+  def self.schemas
+    (ApplicationRecord.subclasses + VirtualRecord.subclasses).each_with_object({}) do |klass, schemas|
+      schemas[klass.name.gsub('::', '')] = ModelSchema.new(klass).schema
+    end
   end
 
   def self.paths
@@ -21,22 +30,16 @@ class Docs
       paths[Rails.application.routes.url_helpers.send("#{klass.table_name}_path")] = {
         get: {
           summary: "List all #{klass.table_name.titleize}",
+          produces: ['application/json'],
           responses: {
             '200': {
-              description: "A list of #{klass.table_name.titleize}",
+              description: "successful operation",
               content: {
                 'application/json': {
                   schema: {
-                    type: 'object',
-                    properties: {
-                      data: {
-                        type: 'array',
-                        items: {
-                          type: 'object',
-                          properties: attrs.each_with_object({}) do |attr, props|
-                            props[attr] = { type: klass.attribute_types[attr.to_s].type.to_s }
-                          end
-                        }
+                      type: 'array',
+                      items: {
+                        "$ref": "#/components/schemas/#{klass.name.gsub('::', '')}"
                       }
                     },
                     example: attrs.each_with_object({}) do |attr, example|
@@ -48,7 +51,7 @@ class Docs
             }
           }
         }
-      }
+
     end
 
     paths

@@ -1,5 +1,5 @@
 module Ethereum
-  class Example < ::VirtualRecord
+  class ExampleTransaction < ::VirtualRecord
     attribute :contract_name, :string
     attribute :contract_method, :string
     attribute :payload, :transaction_payload
