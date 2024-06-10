@@ -68,3 +68,6 @@ end
 gem 'graphql'
 gem 'graphiql-rails', group: :development
 gem 'active_model_serializers'
+
+
+gem "rswag-ui", "~> 2.13"

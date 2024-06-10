@@ -8,7 +8,7 @@ class Docs
         termsOfService: 'https://figment.io/staking-terms-of-use'
       },
       paths:
-    }.to_yaml
+    }.to_json
   end
 
   def self.paths
@@ -18,7 +18,7 @@ class Docs
       serializer = ActiveModelSerializers::SerializableResource.new(klass.new)
       attrs = serializer.serializable_hash.keys
 
-      paths[klass.table_name] = {
+      paths["/#{klass.name.gsub('::', '/').downcase.pluralize}"] = {
         get: {
           summary: "List all #{klass.table_name.titleize}",
           responses: {
