@@ -38,6 +38,7 @@ module Swagger
         paths[Rails.application.routes.url_helpers.send("#{klass.table_name}_path")] = {
           get: {
             summary: "List all #{klass.table_name.titleize}",
+            operationId: "get#{klass.table_name.camelize.upcase_first}",
             tags: [ klass.module_parent.name.underscore ],
             responses: {
               '200': {
