@@ -37,7 +37,7 @@ class ApiController < ApplicationController
   end
 
   def docs
-    render plain: Docs.generate
+    render plain: Swagger::Docs.generate
   end
 
   private
