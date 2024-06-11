@@ -2,7 +2,7 @@ module Swagger
   class Docs
     def self.generate
       {
-        openapi: '3.1.0',
+        openapi: '3.0.2',
         info: {
           title: 'Figment API',
           version: '2.0.0',
@@ -27,40 +27,26 @@ module Swagger
 
     def self.schemas
       (ApplicationRecord.subclasses + VirtualRecord.subclasses).each_with_object({}) do |klass, schemas|
-        schemas[klass.name.gsub('::', '')] = Schema.new(klass).schema
+        s = Schema.new(klass)
+        schemas[s.oas_model] = s.schema
       end
     end
 
     def self.paths
-      paths = {}
+      (ApplicationRecord.subclasses + VirtualRecord.subclasses).each_with_object({}) do |klass, paths|
+        tag = klass.module_parent.name.underscore
+        example = Example.new(klass).json
 
-      (ApplicationRecord.subclasses + VirtualRecord.subclasses).each do |klass|
-        paths[Rails.application.routes.url_helpers.send("#{klass.table_name}_path")] = {
-          get: {
-            summary: "List all #{klass.table_name.titleize}",
-            operationId: "get#{klass.table_name.camelize.upcase_first}",
-            tags: [ klass.module_parent.name.underscore ],
-            responses: {
-              '200': {
-                description: 'OK',
-                content: {
-                  'application/json': {
-                    schema: {
-                      type: 'array',
-                      items: {
-                        "$ref": "#/components/schemas/#{klass.name.gsub('::', '')}"
-                      }
-                    },
-                    example: [Example.new(klass).json]
-                  }
-                }
-              }
-            }
-          }
-        }
+        if klass.available_restful_actions.include?(:show)
+          show = Show.new(klass)
+          paths[show.path] = show.operation
+        end
+
+        if klass.available_restful_actions.include?(:index)
+          index = Index.new(klass)
+          paths[index.path] = index.operation
+        end
       end
-
-      paths
     end
   end
 end

@@ -3,6 +3,10 @@ class ApiController < ApplicationController
   before_action :set_current_user
   before_action :set_model, except: :docs
 
+  rescue_from ActiveRecord::RecordNotFound do
+    render json: { message: 'Not found' }, status: :not_found
+  end
+
   def index
     render json: @model_class.all
   end

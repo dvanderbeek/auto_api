@@ -1,5 +1,17 @@
 module Swagger
   class Schema < SimpleDelegator
+    def oas_model
+      name.gsub('::', '')
+    end
+
+    def path
+      "#/components/schemas/#{oas_model}"
+    end
+
+    def ref
+      { '$ref': path }
+    end
+
     def schema
       {
         type: 'object',
