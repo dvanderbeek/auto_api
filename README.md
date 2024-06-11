@@ -17,8 +17,11 @@ FOLLOW UPS:
 * Non-CRUDL actions on member or collection
 * Create pattern for enums (model attrs and GQL types)
 * More robust way to define permitted_params and args for mutations
+    * Keep current setup working, but if an Input object exists use that to define / reflect on attributes and validations
 * Handle nested objects (like /posts/:id/comments)
 * Dynamic GQL schema based on user permissions
+
+AUTO-GENERATED TOOLING:
 
 * Generate API Clients
 * Generate Postman requests (or export OpenAPI to postman)
