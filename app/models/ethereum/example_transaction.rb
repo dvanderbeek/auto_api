@@ -7,5 +7,9 @@ module Ethereum
     def payload
       "SOME PAYLOAD FROM REMOTE API"
     end
+
+    def self.permitted_attributes
+      %w[contract_name contract_method]
+    end
   end
 end
