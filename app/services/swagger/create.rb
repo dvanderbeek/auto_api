@@ -4,7 +4,7 @@ module Swagger
       {
         post: {
           summary: "Create a new #{name.demodulize.titleize}",
-          operationId: "create#{name.gsub('::', '::')}",
+          operationId: "create#{name.gsub('::', '')}",
           tags: [ tag ],
           requestBody: {
             content: {

@@ -8,7 +8,7 @@ module Swagger
       {
         patch: {
           summary: "Update an existing #{name.demodulize.titleize}",
-          operationId: "update#{name.gsub('::', '::')}",
+          operationId: "update#{name.gsub('::', '')}",
           tags: [ tag ],
           parameters: [
             { name: 'id', in: 'path', required: true }
