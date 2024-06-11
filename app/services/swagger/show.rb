@@ -1,7 +1,7 @@
 module Swagger
   class Show < Operation
     def path
-      Rails.application.routes.url_helpers.send("#{table_name}_path") + '/{id}'
+      "#{super}/{id}"
     end
 
     def operation

@@ -1,9 +1,5 @@
 module Swagger
   class Index < Operation
-    def path
-      Rails.application.routes.url_helpers.send("#{table_name}_path")
-    end
-
     def operation
       {
         get: {
