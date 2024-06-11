@@ -11,11 +11,4 @@ class ApplicationRecord < ActiveRecord::Base
   def self.unpermitted_attributes
     %w[id created_at updated_at]
   end
-
-  def self.setup_complete?
-    "#{name}Serializer".constantize
-    return true
-  rescue NameError
-    false
-  end
 end

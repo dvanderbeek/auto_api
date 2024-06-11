@@ -18,13 +18,6 @@ class VirtualRecord
     %w[id created_at updated_at]
   end
 
-  def self.setup_complete?
-    "#{name}Serializer".constantize
-    return true
-  rescue NameError
-    false
-  end
-
   def save(*)
     valid?
   end
