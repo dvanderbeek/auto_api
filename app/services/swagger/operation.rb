@@ -17,5 +17,9 @@ module Swagger
     def schema
       Schema.new(self).ref
     end
+
+    def input_schema
+      Schema.new(self).schema(permitted_attributes)
+    end
   end
 end

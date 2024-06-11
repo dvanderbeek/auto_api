@@ -34,19 +34,18 @@ module Swagger
 
     def self.paths
       (ApplicationRecord.subclasses + VirtualRecord.subclasses).each_with_object({}) do |klass, paths|
-        tag = klass.module_parent.name.underscore
-        example = Example.new(klass).json
-
-        if klass.available_restful_actions.include?(:show)
-          show = Show.new(klass)
-          paths[show.path] = show.operation
-        end
-
-        if klass.available_restful_actions.include?(:index)
-          index = Index.new(klass)
-          paths[index.path] = index.operation
-        end
+        add_operation(paths, klass, Show) if klass.available_restful_actions.include?(:show)
+        add_operation(paths, klass, Index) if klass.available_restful_actions.include?(:index)
+        add_operation(paths, klass, Destroy) if klass.available_restful_actions.include?(:destroy)
+        add_operation(paths, klass, Create) if klass.available_restful_actions.include?(:create)
+        add_operation(paths, klass, Update) if klass.available_restful_actions.include?(:update)
       end
+    end
+
+    def self.add_operation(paths, klass, operation_klass)
+      operation = operation_klass.new(klass)
+      paths[operation.path] ||= {}
+      paths[operation.path].merge! operation.operation
     end
   end
 end

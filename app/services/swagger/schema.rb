@@ -12,7 +12,7 @@ module Swagger
       { '$ref': path }
     end
 
-    def schema
+    def schema(attrs = serializer.serializable_hash.keys)
       {
         type: 'object',
         properties: attrs.each_with_object({}) do |attr, props|
@@ -30,10 +30,6 @@ module Swagger
 
     def serializer
       ActiveModelSerializers::SerializableResource.new(new)
-    end
-
-    def attrs
-      serializer.serializable_hash.keys
     end
   end
 end

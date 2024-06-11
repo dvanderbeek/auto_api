@@ -1,11 +1,19 @@
 module Swagger
-  class Index < Operation
+  class Create < Operation
+    # TODO: Add input parameters
     def operation
       {
-        get: {
-          summary: "List all #{name.demodulize.pluralize.titleize}",
-          operationId: "get#{name.gsub('::', '')}",
+        post: {
+          summary: "Create a new #{name.demodulize.titleize}",
+          operationId: "create#{name.gsub('::', '::')}",
           tags: [ tag ],
+          requestBody: {
+            content: {
+              'application/json': {
+                schema: input_schema
+              }
+            }
+          },
           responses: {
             '200': {
               description: 'OK',
@@ -15,7 +23,7 @@ module Swagger
                     type: 'array',
                     items: schema
                   },
-                  example: [example]
+                  example:
                 }
               }
             }

@@ -1,18 +1,25 @@
 module Swagger
-  class Show < Operation
+  class Update < Operation
     def path
       "#{super}/{id}"
     end
 
     def operation
       {
-        get: {
-          summary: "Find #{name.demodulize.titleize} by ID",
-          operationId: "get#{name.gsub('::', '')}",
+        patch: {
+          summary: "Update an existing #{name.demodulize.titleize}",
+          operationId: "update#{name.gsub('::', '::')}",
           tags: [ tag ],
           parameters: [
             { name: 'id', in: 'path', required: true }
           ],
+          requestBody: {
+            content: {
+              'application/json': {
+                schema: input_schema
+              }
+            }
+          },
           responses: {
             '200': {
               description: 'OK',
