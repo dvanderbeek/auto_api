@@ -1,6 +1,5 @@
 module Swagger
   class Create < Operation
-    # TODO: Add input parameters
     def operation
       {
         post: {
