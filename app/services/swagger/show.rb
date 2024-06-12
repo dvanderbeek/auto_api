@@ -8,7 +8,7 @@ module Swagger
       {
         get: {
           summary: "Find #{name.demodulize.titleize} by ID",
-          operationId: "get#{name.gsub('::', '')}",
+          operationId: "get#{name.gsub('::', '')}ById",
           tags: [ tag ],
           parameters: [
             { name: 'id', in: 'path', required: true }

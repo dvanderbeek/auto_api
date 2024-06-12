@@ -7,7 +7,7 @@ module Swagger
     def operation
       {
         delete: {
-          summary: "Deletes an existing #{name.demodulize.titleize}",
+          summary: "Delete an existing #{name.demodulize.titleize}",
           operationId: "delete#{name.gsub('::', '')}",
           tags: [ tag ],
           parameters: [

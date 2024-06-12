@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_07_182820) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_12_013507) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,4 +48,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_182820) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pet_store_pets", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pet_store_profile_photos", force: :cascade do |t|
+    t.string "url"
+    t.bigint "pet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_pet_store_profile_photos_on_pet_id"
+  end
+
+  add_foreign_key "pet_store_profile_photos", "pet_store_pets", column: "pet_id", on_delete: :cascade
 end

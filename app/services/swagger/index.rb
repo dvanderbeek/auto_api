@@ -4,7 +4,7 @@ module Swagger
       {
         get: {
           summary: "List all #{name.demodulize.pluralize.titleize}",
-          operationId: "get#{name.gsub('::', '')}",
+          operationId: "list#{name.gsub('::', '').pluralize}",
           tags: [ tag ],
           responses: {
             '200': {
