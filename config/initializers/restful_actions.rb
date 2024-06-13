@@ -1,4 +1,4 @@
-require 'active_model/attribute_set'
+# require 'active_model/attribute_set'
 
 module RestfulActions
   extend ActiveSupport::Concern
@@ -21,16 +21,32 @@ module RestfulActions
       @allowed_attributes
     end
 
+    def restrict(name)
+      self.pending_attribute_modifications << PendingRestricted.new(name)
+
+      reset_allowed_attributes
+    end
+
     def allow(name, **options)
-      puts "Allowing #{name} on #{options[:on]}"
+      reset_allowed_attributes
+
       self.pending_attribute_modifications << PendingAllowed.new(name, options[:on])
 
       reset_allowed_attributes
     end
 
     def _allowed_attributes
-      @allowed_attributes ||= ::ActiveModel::AttributeSet.new({}).tap do |attribute_set|
-        apply_pending_attribute_modifications(attribute_set)
+      @allowed_attributes ||= begin
+        # TODO: instead of a plain Hash, wrap in an object so we could do things like Model.allowed_attributes(:create)
+        # and return attributes where actions includes 'create'
+
+        attrs_hash = attribute_names.excluding("id", "created_at", "updated_at").each_with_object({}) do |name, attrs|
+          attrs[name] = AllowedAttribute.new(name:, actions: [:create, :update])
+        end
+
+        apply_pending_attribute_modifications(attrs_hash)
+
+        attrs_hash
       end
     end
 
@@ -47,7 +63,13 @@ module RestfulActions
 
     PendingAllowed = Struct.new(:name, :actions) do
       def apply_to(attribute_set)
-        attribute_set[name] = AllowedAttribute.new(name:, actions:)
+        attribute_set[name.to_s] = AllowedAttribute.new(name:, actions:)
+      end
+    end
+
+    PendingRestricted = Struct.new(:name) do
+      def apply_to(attribute_set)
+        attribute_set.delete(name.to_s)
       end
     end
 
