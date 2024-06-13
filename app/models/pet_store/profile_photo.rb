@@ -3,6 +3,9 @@ class PetStore::ProfilePhoto < ApplicationRecord
 
   restful_actions :create, :update
 
+  allow :url, on: [:create, :update]
+  allow :pet_id, on: :create
+
   # TODO: only allow pet_id on create;
   # TODO: Figure out scoping to current user
   def self.permitted_attributes
