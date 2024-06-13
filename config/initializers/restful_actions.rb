@@ -17,8 +17,12 @@ module RestfulActions
       self.available_restful_actions = actions
     end
 
-    def allowed_attributes
-      @allowed_attributes
+    def allowed_attributes(action = nil)
+      result = @allowed_attributes
+
+      return result if action.nil?
+
+      result.filter { |k, v| v.actions.include?(action.to_sym) }
     end
 
     def restrict(name)

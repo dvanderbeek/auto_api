@@ -52,7 +52,7 @@ class ApiController < ApplicationController
   end
 
   def resource_params
-    params.permit(@model_class.permitted_attributes)
+    params.permit(@model_class.allowed_attributes(params[:action]).keys)
   end
 
   def set_current_user

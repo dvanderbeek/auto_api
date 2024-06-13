@@ -9,7 +9,7 @@ module Swagger
           requestBody: {
             content: {
               'application/json': {
-                schema: input_schema
+                schema: input_schema(:create)
               }
             }
           },

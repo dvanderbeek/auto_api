@@ -18,8 +18,8 @@ module Swagger
       Schema.new(self).ref
     end
 
-    def input_schema
-      Schema.new(self).schema(permitted_attributes)
+    def input_schema(action)
+      Schema.new(self).schema(allowed_attributes(action).keys)
     end
   end
 end

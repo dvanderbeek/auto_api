@@ -21,7 +21,7 @@ module Types
           graphql_name type_name
           description "A dynamically generated input type for #{name}"
 
-          model.permitted_attributes.each do |attr|
+          model.allowed_attributes(:create).keys.each do |attr|
             type = model.attribute_types[attr].type
             # TODO: introspect validations to see what attributes are required
             argument attr.to_sym, Types::GqlType.new(type).to_gql, required: false

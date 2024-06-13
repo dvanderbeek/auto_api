@@ -5,7 +5,6 @@ class PetStore::Pet < ApplicationRecord
 
   attribute :profile_photo_url, :string
 
-  def self.permitted_attributes
-    %w[name]
-  end
+  allow :name, on: [:create, :update]
+  restrict :profile_photo_url
 end

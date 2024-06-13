@@ -10,14 +10,6 @@ class VirtualRecord
     name.gsub('::', '').pluralize.underscore
   end
 
-  def self.permitted_attributes
-    attribute_names - unpermitted_attributes
-  end
-
-  def self.unpermitted_attributes
-    %w[id created_at updated_at]
-  end
-
   def save(*)
     valid?
   end
