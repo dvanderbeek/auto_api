@@ -5,6 +5,6 @@ class PetStore::Pet < ApplicationRecord
 
   attribute :profile_photo_url, :string
 
-  allow :name, on: [:create, :update]
+  # TODO: maybe use accepts_netsted_attributes_for since this attr is on an associated model
   restrict :profile_photo_url
 end

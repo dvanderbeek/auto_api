@@ -3,7 +3,6 @@ class PetStore::ProfilePhoto < ApplicationRecord
 
   restful_actions :create, :update
 
-  allow :url, on: [:create, :update]
   allow :pet_id, on: :create
 
   # TODO: Include Pet in response, or make the response object be the associated Pet
