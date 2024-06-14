@@ -32,7 +32,7 @@ module Types
       def self.create_type(model, type_name)
         Class.new(Types::BaseObject) do
           graphql_name type_name
-          description "A dynamically generated type for #{name}"
+          description "A dynamically generated type for #{model.name}"
 
           serializer = ActiveModelSerializers::SerializableResource.new(model.new)
           attrs = serializer.serializable_hash.keys
@@ -41,11 +41,11 @@ module Types
             # TODO: introspect validations to see what attributes are required
             # column = model.columns.find { |c| c.name.to_s == attr.to_s }
 
-            type_name = model.attribute_types[attr.to_s].type
+            attr_type_name = model.attribute_types[attr.to_s].type
 
-            if type_name
-              type = Types::GqlType.new(type_name).to_gql
-            elsif type_name.nil? && associated_model = model.reflect_on_association(attr)&.klass
+            if attr_type_name
+              type = Types::GqlType.new(attr_type_name).to_gql
+            elsif attr_type_name.nil? && associated_model = model.reflect_on_association(attr)&.klass
               type = Types::Objects::BaseModelType.register(associated_model)[:type]
             end
             next unless type
