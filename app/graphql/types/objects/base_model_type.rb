@@ -41,9 +41,16 @@ module Types
             # TODO: introspect validations to see what attributes are required
             # column = model.columns.find { |c| c.name.to_s == attr.to_s }
 
-            type = model.attribute_types[attr.to_s].type
+            type_name = model.attribute_types[attr.to_s].type
 
-            field attr.to_sym, Types::GqlType.new(type).to_gql, null: true #(column&.null || true)
+            if type_name
+              type = Types::GqlType.new(type_name).to_gql
+            elsif type_name.nil? && associated_model = model.reflect_on_association(attr)&.klass
+              type = Types::Objects::BaseModelType.register(associated_model)[:type]
+            end
+            next unless type
+
+            field attr.to_sym, type, null: true #(column&.null || true)
           end
         end
       end
