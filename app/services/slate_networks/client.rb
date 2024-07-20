@@ -9,6 +9,10 @@ module SlateNetworks
       klass.new({ protocol:, network: })
     end
 
+    def sign(*)
+      raise NotImplementedError, 'subclasses must implement sign'
+    end
+
     def broadcast(*)
       raise NotImplementedError, 'subclasses must implement broadcast'
     end

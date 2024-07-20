@@ -7,7 +7,9 @@ module Transactions
     attribute :signed_transaction_payload, :transaction_payload
 
     def signed_transaction_payload
-      "SIGNED WITH SLATE_NETWORKS OR RPC CLIENT"
+      return unless protocol && network
+
+      SlateNetworks::Client.for(protocol, network).sign(unsigned_transaction_payload, private_key)
     end
 
     def self.permitted_attributes
