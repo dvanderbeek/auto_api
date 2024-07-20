@@ -7,7 +7,7 @@ module Swagger
     def operation
       {
         get: {
-          summary: "Find #{name.demodulize.titleize} by ID",
+          summary: "Finds an existing #{name.demodulize.titleize} by ID",
           operationId: "get#{name.gsub('::', '')}",
           tags: [ tag ],
           parameters: [
