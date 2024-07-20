@@ -5,6 +5,8 @@ module SlateNetworks
     attr_accessor :protocol, :network
 
     def self.for(protocol, network)
+      return unless protocol && network
+
       klass = "SlateNetworks::#{protocol.classify}Client".constantize
       klass.new({ protocol:, network: })
     end

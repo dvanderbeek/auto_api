@@ -6,7 +6,6 @@ module HasClient
   end
 
   def client
-    return unless protocol && network
     @client || SlateNetworks::Client.for(protocol, network)
   end
 end
