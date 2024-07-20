@@ -2,6 +2,8 @@ module Transactions
   class Signature < VirtualRecord
     include HasClient
 
+    validates :protocol, inclusion: { in: %w[near ethereum solana], message: 'is not currently supported' }
+
     attribute :protocol, :string
     attribute :network, :string
     attribute :unsigned_transaction_payload, :transaction_payload

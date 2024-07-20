@@ -2,6 +2,8 @@ module Transactions
   class Broadcast < VirtualRecord
     include HasClient
 
+    validates :protocol, inclusion: { in: %w[near ethereum solana], message: 'is not currently supported' }
+
     attribute :protocol, :string
     attribute :network, :string
     attribute :signed_transaction_payload, :transaction_payload
@@ -14,7 +16,7 @@ module Transactions
     end
 
     def transaction_hash
-      client&.broadcast(unsigned_transaction_payload, private_key)
+      client&.broadcast(signed_transaction_payload)
     end
   end
 end
