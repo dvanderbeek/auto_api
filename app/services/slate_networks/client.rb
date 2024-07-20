@@ -7,7 +7,7 @@ module SlateNetworks
     def self.for(protocol, network)
       return unless protocol && network
 
-      klass = "SlateNetworks::#{protocol.classify}Client".constantize
+      klass = "SlateNetworks::#{protocol.camelize}Client".constantize
       klass.new({ protocol:, network: })
     end
 
