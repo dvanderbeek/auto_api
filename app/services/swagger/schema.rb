@@ -16,15 +16,19 @@ module Swagger
       {
         type: 'object',
         properties: attrs.each_with_object({}) do |attr, props|
-          props[attr] = { type: oas_type(attribute_types[attr.to_s].type) }
+          type = attribute_types[attr.to_s]
+          props[attr] = {
+            type: oas_type(type),
+            example: type.example
+          }
         end
       }
     end
 
     def oas_type(attr_type)
-      case attr_type.to_s
+      case attr_type.type.to_s
       when 'datetime', 'text' then 'string'
-      else attr_type
+      else attr_type.type
       end
     end
 

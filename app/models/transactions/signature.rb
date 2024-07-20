@@ -4,8 +4,6 @@ module Transactions
 
     validates :protocol, inclusion: { in: %w[near ethereum solana], message: 'is not currently supported' }
 
-    attribute :protocol, :string
-    attribute :network, :string
     attribute :unsigned_transaction_payload, :transaction_payload
     attribute :private_key, :string
     attribute :signed_transaction_payload, :transaction_payload

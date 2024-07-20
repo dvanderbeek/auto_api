@@ -3,6 +3,9 @@ module HasClient
 
   included do
     attr_writer :client
+
+    attribute :protocol, :protocol
+    attribute :network, :network
   end
 
   def client

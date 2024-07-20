@@ -49,5 +49,23 @@ class TransactionPayloadType < ActiveModel::Type::String
   end
 end
 
+class ProtocolType < ActiveModel::Type::String
+  def example
+    'ethereum'
+  end
+end
+
+class NetworkType < ActiveModel::Type::String
+  def example
+    'mainnet'
+  end
+end
+
 ActiveRecord::Type.register(:transaction_payload, TransactionPayloadType)
 ActiveModel::Type.register(:transaction_payload, TransactionPayloadType)
+
+ActiveRecord::Type.register(:protocol, ProtocolType)
+ActiveModel::Type.register(:protocol, ProtocolType)
+
+ActiveRecord::Type.register(:network, NetworkType)
+ActiveModel::Type.register(:network, NetworkType)
