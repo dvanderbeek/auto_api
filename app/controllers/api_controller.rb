@@ -1,4 +1,6 @@
 class ApiController < ApplicationController
+  wrap_parameters false
+
   skip_before_action :verify_authenticity_token, except: :docs
   before_action :set_current_user
   before_action :set_model, except: :docs
@@ -51,8 +53,12 @@ class ApiController < ApplicationController
     @model_class = params[:model].classify.constantize
   end
 
+  def permitted_params
+    params.permit(@model_class.permitted_attributes << 'model')
+  end
+
   def resource_params
-    params.permit(@model_class.permitted_attributes)
+    permitted_params.slice(*@model_class.permitted_attributes)
   end
 
   def set_current_user
