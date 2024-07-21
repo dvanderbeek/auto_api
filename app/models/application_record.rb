@@ -14,7 +14,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   def self.declarative_enum(enum_mod)
     values = enum_mod.definition.transform_values { |v| v[:value] }
-    enum(enum_mod.key => values)
+    enum enum_mod.key, values, validate: true
     attribute enum_mod.key, enum_mod.attr_type
   end
 end

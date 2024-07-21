@@ -19,8 +19,10 @@ module Swagger
           type = attribute_types[attr.to_s]
           props[attr] = {
             type: oas_type(type),
-            example: type.example
+            example: type.example,
           }
+          props[attr][:enum] = defined_enums[attr.to_s].keys if respond_to?(:defined_enums) && defined_enums[attr.to_s]
+          props[attr]
         end
       }
     end
