@@ -13,6 +13,11 @@ module Transactions
       %w[protocol network signed_transaction_payload]
     end
 
+    def save(*)
+      super(*)
+      HelloWorldJob.perform_later
+    end
+
     def transaction_hash
       client&.broadcast(signed_transaction_payload)
     end

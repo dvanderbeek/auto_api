@@ -1,3 +1,3 @@
 class Ethereum::TransactionPayloadSerializer < ActiveModel::Serializer
-  attributes :id, :serialized, :signing_payload
+  attributes :id, :serialized, :signing_payload, :network
 end

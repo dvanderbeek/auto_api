@@ -71,3 +71,6 @@ gem 'active_model_serializers'
 
 
 gem "rswag-ui", "~> 2.13"
+
+gem "solid_queue", "~> 0.3.1"
+gem "mission_control-jobs", "~> 0.2.1"

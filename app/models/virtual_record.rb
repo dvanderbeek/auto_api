@@ -18,6 +18,11 @@ class VirtualRecord
     %w[id created_at updated_at]
   end
 
+  def self.declarative_enum(enum_mod)
+    attribute enum_mod.key, enum_mod.attr_type
+    validates enum_mod.key, inclusion: { in: enum_mod.definition.values.map { |v| v[:value] } }
+  end
+
   def save(*)
     valid?
   end

@@ -1,4 +1,5 @@
 class Ethereum::TransactionPayload < ApplicationRecord
+  declarative_enum Ethereum::NetworkEnum
   attribute :serialized, :transaction_payload
   attribute :signing_payload, :string
 
