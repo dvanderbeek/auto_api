@@ -1,5 +1,4 @@
 # Extending built-in types with example values for docs
-
 module ActiveRecord
   module Type
     class Text

@@ -19,7 +19,7 @@ module DeclarativeEnum
   end
 
   def attr_type(new_type = nil)
-    @attr_type = new_type if new_type
+    @attr_type = new_type || :string
 
     @attr_type
   end
