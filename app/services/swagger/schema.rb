@@ -17,11 +17,12 @@ module Swagger
         type: 'object',
         properties: attrs.each_with_object({}) do |attr, props|
           type = attribute_types[attr.to_s]
+          enum = defined_enums[attr.to_s] if respond_to?(:defined_enums)
           props[attr] = {
             type: oas_type(type),
-            example: type.example,
+            example: enum&.keys&.first || type.example,
           }
-          props[attr][:enum] = defined_enums[attr.to_s].keys if respond_to?(:defined_enums) && defined_enums[attr.to_s]
+          props[attr][:enum] = enum.keys if enum
           props[attr]
         end
       }
