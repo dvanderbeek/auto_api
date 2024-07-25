@@ -7,5 +7,9 @@ module SlateNetworks
     def broadcast(payload)
       "ethereum-#{network}-tx-hash"
     end
+
+    def generate_transaction(input)
+      "ethereum-#{network}-unsigned-tx-payload"
+    end
   end
 end

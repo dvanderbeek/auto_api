@@ -20,20 +20,20 @@ module Swagger
     # Should build a mechanism to customize the order vs. just alphabetical
     # https://swagger.io/docs/specification/grouping-operations-with-tags/
     def self.tags
-      (ApplicationRecord.subclasses + VirtualRecord.subclasses).map do |k|
+      (ApplicationRecord.descendants + VirtualRecord.descendants).map do |k|
         k.name.deconstantize.underscore
       end.uniq.sort.map { |name| { name: } }
     end
 
     def self.schemas
-      (ApplicationRecord.subclasses + VirtualRecord.subclasses).each_with_object({}) do |klass, schemas|
+      (ApplicationRecord.descendants + VirtualRecord.descendants).each_with_object({}) do |klass, schemas|
         s = Schema.new(klass)
         schemas[s.oas_model] = s.schema
       end
     end
 
     def self.paths
-      (ApplicationRecord.subclasses + VirtualRecord.subclasses).each_with_object({}) do |klass, paths|
+      (ApplicationRecord.descendants + VirtualRecord.descendants).each_with_object({}) do |klass, paths|
         add_operation(paths, klass, Show) if klass.available_restful_actions.include?(:show)
         add_operation(paths, klass, Index) if klass.available_restful_actions.include?(:index)
         add_operation(paths, klass, Destroy) if klass.available_restful_actions.include?(:destroy)

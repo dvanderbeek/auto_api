@@ -7,5 +7,9 @@ module SlateNetworks
     def broadcast(payload)
       "near-#{network}-tx-hash"
     end
+
+    def generate_transaction(input)
+      "near-#{network}-unsigned-tx-payload"
+    end
   end
 end

@@ -42,9 +42,21 @@ end
 
 # Adding custom types with more specific example values that can be used across resources
 
+class UuidType < ActiveModel::Type::String
+  def example
+    '267f5e67-0311-490a-b776-06e5075123b0'
+  end
+end
+
 class TransactionPayloadType < ActiveModel::Type::String
   def example
     'hex-encoded-transaction-payload'
+  end
+end
+
+class TransactionHashType < ActiveModel::Type::String
+  def example
+    'hex-encoded-transaction-hash'
   end
 end
 
@@ -60,8 +72,14 @@ class NetworkType < ActiveModel::Type::String
   end
 end
 
+ActiveRecord::Type.register(:uuid, UuidType)
+ActiveModel::Type.register(:uuid, UuidType)
+
 ActiveRecord::Type.register(:transaction_payload, TransactionPayloadType)
 ActiveModel::Type.register(:transaction_payload, TransactionPayloadType)
+
+ActiveRecord::Type.register(:transaction_hash, TransactionHashType)
+ActiveModel::Type.register(:transaction_hash, TransactionHashType)
 
 ActiveRecord::Type.register(:protocol, ProtocolType)
 ActiveModel::Type.register(:protocol, ProtocolType)
