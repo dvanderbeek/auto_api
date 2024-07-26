@@ -14,8 +14,8 @@ module Solana
 
     # also, instead of having a separate client class with tons of different requests, it may make sense to just make this class aware of how
     # to make a single request to slate-networks or whatever RPC it needs
-    def payload
-      "delegate-#{amount_lamports}-lamports-to-#{vote_account_pubkey}-on-#{network}"
-    end
+    # def payload
+    #   "delegate-#{amount_lamports}-lamports-to-#{vote_account_pubkey}-on-#{network}"
+    # end
   end
 end

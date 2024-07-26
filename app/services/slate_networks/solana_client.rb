@@ -19,9 +19,5 @@ module SlateNetworks
     def undelegate_transaction(input)
       "undelegate-from-#{input.stake_account_pubkey}-on-#{network}"
     end
-
-    def withdraw_transaction(input)
-      "withdraw-#{input.amount_lamports}-lamports-from-#{input.stake_account_pubkey}-on-#{network}"
-    end
   end
 end
