@@ -6,10 +6,6 @@ module ActsAsTransactionPayload
 
     attribute :payload, :transaction_payload
 
-    def payload
-      client&.generate_transaction(self)
-    end
-
     def protocol
       self.class.module_parent.name.underscore
     end

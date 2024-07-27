@@ -7,17 +7,5 @@ module SlateNetworks
     def broadcast(payload)
       "solana-#{network}-tx-hash"
     end
-
-    def generate_transaction(input)
-      send input.transaction_type, input
-    end
-
-    def delegate_transaction(input)
-      "delegate-#{input.amount_lamports}-lamports-to-#{input.vote_account_pubkey}-on-#{network}"
-    end
-
-    def undelegate_transaction(input)
-      "undelegate-from-#{input.stake_account_pubkey}-on-#{network}"
-    end
   end
 end

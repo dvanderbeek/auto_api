@@ -9,6 +9,12 @@ module Solana
       %w[network funding_account_pubkey stake_account_pubkey]
     end
 
-    # TODO: Figure out how to generate a single Type for this in OpenApi / GQL, shared with other transaction types
+    def undelegate_transaction(input)
+      client&.post(
+        '/undelegate_transaction',
+        attributes,
+        "undelegate-from-#{input.stake_account_pubkey}-on-#{network}"
+      )
+    end
   end
 end

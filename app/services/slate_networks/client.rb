@@ -18,8 +18,8 @@ module SlateNetworks
       raise NotImplementedError, 'subclasses must implement broadcast'
     end
 
-    def generate_transaction(*)
-      raise NotImplementedError, 'subclasses must implement generate_transaction'
+    def post(_path, _input, resp)
+      resp
     end
   end
 end

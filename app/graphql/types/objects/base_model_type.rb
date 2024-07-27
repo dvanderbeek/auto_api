@@ -19,7 +19,7 @@ module Types
       def self.create_input_type(model, type_name)
         Class.new(Types::BaseInputObject) do
           graphql_name type_name
-          description "A dynamically generated input type for #{name}"
+          description "A dynamically generated input type for #{type_name}"
 
           model.permitted_attributes.each do |attr|
             type = model.attribute_types[attr].type
@@ -32,7 +32,7 @@ module Types
       def self.create_type(model, type_name)
         Class.new(Types::BaseObject) do
           graphql_name type_name
-          description "A dynamically generated type for #{name}"
+          description "A dynamically generated type for #{type_name}"
 
           serializer = ActiveModelSerializers::SerializableResource.new(model.new)
           attrs = serializer.serializable_hash.keys
