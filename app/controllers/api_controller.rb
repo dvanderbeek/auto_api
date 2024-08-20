@@ -29,6 +29,7 @@ class ApiController < ApplicationController
 
   def update
     resource = @model_class.find(params[:id])
+
     if resource.update(resource_params)
       resource.reload # without reloading, virtual persisted attributes return stale values
       render json: resource
