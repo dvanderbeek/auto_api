@@ -37,6 +37,12 @@ module ActiveModel
         '2024-06-08T14:33:47Z'
       end
     end
+
+    class Boolean
+      def example
+        true
+      end
+    end
   end
 end
 
