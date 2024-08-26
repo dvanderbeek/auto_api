@@ -11,5 +11,7 @@ module Accounts
     # def fetch_name
     #   NameApiClient.new.get_name(self)
     # end
+
+    # TODO: Figure out a way to make a single API call and map the response data into multiple model attributes
   end
 end
