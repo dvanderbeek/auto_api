@@ -20,6 +20,8 @@ module Autopopulateable
 
   def autopopulate_attributes
     self.class.autopopulated_attributes.each do |attr, method|
+      next unless send(attr).blank?
+
       value = if method.respond_to?(:call)
         method.call(self)
       elsif method.is_a?(Symbol) || method.is_a?(String)
@@ -28,7 +30,7 @@ module Autopopulateable
         send("fetch_#{attr}")
       end
 
-      send("#{attr}=", value) if send(attr).blank?
+      send("#{attr}=", value)
     end
   end
 end
