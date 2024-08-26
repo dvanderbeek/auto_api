@@ -4,8 +4,8 @@ class NameApiClient
     'DVDB'
   end
 
-  def valid_name?(name)
-    puts 'calling remote api in validation'
+  def valid_name?(_name)
+    puts 'Calling remote API in validation'
     false
   end
 end
