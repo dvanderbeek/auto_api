@@ -19,7 +19,7 @@ RSpec.describe Accounts::User do
   describe 'autopopulated' do
     it 'populates the name attribute' do
       user = FactoryBot.create(:accounts_user, name: nil, autopopulated: true)
-      expect(user.name).to eq user.fetch_my_name
+      expect(user.name).to eq NameApiClient.new.get_name(user)
     end
   end
 end
