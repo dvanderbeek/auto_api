@@ -10,6 +10,10 @@ RSpec.describe Accounts::User do
   end
 
   context 'when the user is validated via remote API' do
+    before do
+      allow(NameApiClient).to receive(:new).and_return(instance_double('NameApiClient', valid_name?: false))
+    end
+
     it 'is not valid' do
       user.validated = true
       expect(user).not_to be_valid
