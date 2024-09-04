@@ -15,7 +15,7 @@ Rails.application.routes.draw do
                 controller: 'api',
                 defaults: { model: klass.name },
                 only: klass.available_restful_actions,
-                as: klass.table_name
+                as: klass.name.tableize.gsub('/', '_')
     end
   end
 
