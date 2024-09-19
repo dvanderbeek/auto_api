@@ -33,6 +33,12 @@ module ActiveModel
       end
     end
 
+    class Decimal
+      def example
+        0.5.to_d
+      end
+    end
+
     class DateTime
       def example
         '2024-06-08T14:33:47Z'

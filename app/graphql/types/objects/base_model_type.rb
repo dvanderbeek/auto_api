@@ -23,6 +23,7 @@ module Types
 
           model.allowed_attributes(:create).keys.each do |attr|
             type = model.attribute_types[attr].type
+            next if Types::GqlType.new(type).to_gql.nil?
             # TODO: introspect validations to see what attributes are required
             argument attr.to_sym, Types::GqlType.new(type).to_gql, required: false
           end
@@ -45,8 +46,10 @@ module Types
 
             if attr_type_name
               type = Types::GqlType.new(attr_type_name).to_gql
-            elsif attr_type_name.nil? && associated_model = model.reflect_on_association(attr)&.klass
+            elsif attr_type_name.nil? && reflection = model.reflect_on_association(attr)
+              associated_model = reflection&.klass
               type = Types::Objects::BaseModelType.register(associated_model)[:type]
+              type = [type] if reflection.collection?
             end
             next unless type
 

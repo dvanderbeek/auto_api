@@ -1,0 +1,50 @@
+---
+engine_version: 0.4.28
+file_version: 2024-09-19 14:00:52.192105000 Z
+resources:
+- name: pricing/agreement
+  preferences:
+    columns:
+    - access_type: read_write
+      name: id
+    - name: fee_splits_total_percentage
+      display_name: Fee splits total percentage
+      column_type: float
+      access_type: read_only
+      virtual: false
+      format: {}
+      validators: []
+      description: ''
+    custom_sql: |-
+      SELECT "pricing_agreements".*, sum(pricing_fee_splits.percentage) as "fee_splits_total_percentage"
+      FROM "pricing_agreements"
+      LEFT JOIN pricing_fee_splits ON pricing_fee_splits.agreement_id = pricing_agreements.id
+      GROUP BY pricing_agreements.id
+  updated_at: 2024-09-19 12:59:44.934588000 +00:00
+configs:
+- key: header.links
+  value:
+  - name: Reports
+    link_type: reports
+  - name: Forms
+    link_type: forms
+  updated_at: 2024-09-19 14:00:52.192105000 +00:00
+- key: resources.pricing/agreement.columns.order
+  value:
+  - id
+  - name
+  - effective_fee_percentage
+  - updated_at
+  - created_at
+  updated_at: 2024-09-19 12:48:37.844453000 +00:00
+queries: []
+dashboards: []
+forms: []
+alerts: []
+api_configs:
+- id: 1
+  name: origin
+  url: "/"
+  preferences: {}
+  description:
+  updated_at: 2024-09-19 12:43:10.869351000 +00:00

@@ -11,8 +11,18 @@ module Swagger
         paths:,
         tags:,
         components: {
-          schemas:
-        }
+          schemas:,
+          securitySchemes: {
+            bearerAuth: {
+              type: 'http',
+              scheme: 'bearer',
+              bearerFormat: 'API Key'
+            }
+          }
+        },
+        security: [
+          { bearerAuth: [] }
+        ]
       }.to_json
     end
 

@@ -71,3 +71,5 @@ gem 'active_model_serializers'
 
 
 gem "rswag-ui", "~> 2.13"
+
+gem "motor-admin", "~> 0.4.28"

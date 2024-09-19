@@ -56,6 +56,6 @@ class ApiController < ApplicationController
   end
 
   def set_current_user
-    Current.user = request.headers['user'] || 'anonymous'
+    Current.user = request.headers['Authorization']&.split(' ')&.last || 'anonymous'
   end
 end

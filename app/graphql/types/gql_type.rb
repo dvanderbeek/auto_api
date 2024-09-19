@@ -11,6 +11,7 @@ module Types
       when :string, :text then GraphQL::Types::String
       when :integer then GraphQL::Types::BigInt
       when :datetime then GraphQL::Types::ISO8601DateTime
+      when :decimal then GraphQL::Types::Float
       end
     end
   end
